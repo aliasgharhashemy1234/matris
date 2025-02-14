@@ -2,27 +2,51 @@
 using namespace std;
 
 
-int fibonacci(int n) {
-    if (n <= 0) {
-        return 0; //
+void mergeSortedArrays(int arr1[], int size1, int arr2[], int size2, int result[]) {
+    int i = 0;
+    int j = 0;
+    int k = 0;
+
+
+    while (i < size1 && j < size2) {
+        if (arr1[i] < arr2[j]) {
+            result[k++] = arr1[i++];
+        } else {
+            result[k++] = arr2[j++];
+        }
     }
-    if (n == 1) {
-        return 1; //
+
+
+    while (i < size1) {
+        result[k++] = arr1[i++];
     }
-    return fibonacci(n - 1) + fibonacci(n - 2);
+
+
+    while (j < size2) {
+        result[k++] = arr2[j++];
+    }
 }
 
 int main() {
-    int number;
-    cout << "baraye mohasebe fionachi adad n ra vared konid  ";
-    cin >> number;
 
-    if (number < 0) {
-        cout << "adad bayad bozorgtar ya mosavi sefr bashad!" << endl;
-    } else {
-        int result = fibonacci(number);
-        cout << "adad " << number << "n dar donbale barabar ast ba= " << result << endl;
+    int arr1[] = {1, 3, 5, 7};
+    int size1 = sizeof(arr1) / sizeof(arr1[0]);
+
+    int arr2[] = {2, 4, 6, 8, 10};
+    int size2 = sizeof(arr2) / sizeof(arr2[0]);
+
+
+    int result[size1 + size2];
+
+
+    mergeSortedArrays(arr1, size1, arr2, size2, result);
+
+
+    cout << "araye edgham be surat moratab shode: ";
+    for (int i = 0; i < size1 + size2; i++) {
+        cout << result[i] << " ";
     }
+    cout << endl;
 
     return 0;
 }
