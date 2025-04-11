@@ -1,0 +1,49 @@
+#include <iostream>
+#include <fstream>
+#include <sstream>
+
+using namespace std;
+
+int main() {
+    ifstream inputFile("grades.txt"); 
+    if (!inputFile.is_open()) {
+        cerr << "Error: Could not open the file!" << endl;
+        return 1;
+    }
+
+    double totalSum = 0.0;
+    int totalStudents = 0; 
+    string line;
+
+    while (getline(inputFile, line)) {
+        istringstream iss(line);
+        double sum = 0;
+        int count = 0;    
+        double grade;
+
+        
+        while (iss >> grade) {
+            sum += grade;
+            count++;
+        }
+
+        if (count > 0) {
+            double average = sum / count;
+            totalSum += average;
+            totalStudents++;
+            cout << "Student Average: " << average << endl;
+        }
+    }
+
+    inputFile.close();
+
+    if (totalStudents > 0) {
+        double overallAverage = totalSum / totalStudents;
+        cout << "-------------------------" << endl;
+        cout << "Overall Average: " << overallAverage << endl;
+    } else {
+        cout << "No grades found in the file!" << endl;
+    }
+
+    return 0;
+}
