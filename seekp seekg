@@ -1,0 +1,41 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+
+using namespace std;
+
+int main() {
+    fstream file("example.txt", ios::in | ios::out); /
+
+    if (!file.is_open()) {
+        cerr << "Error: Could not open the file!" << endl;
+        return 1;
+    }
+
+    string searchWord = "غلط";  // کلمه ای که می خواهیم پیدا کنیم
+    string replaceWord = "صحیح"; // کلمه ای که می خواهیم جایگزین کنیم
+
+    string line;
+    streampos pos; 
+
+    while (getline(file, line)) {
+        size_t found = line.find(searchWord);
+        if (found != string::npos) {
+            // ذخیره موقعیت فعلی
+            pos = file.tellg();
+            
+            file.seekp(pos - static_cast<streampos>(line.length()) + static_cast<streampos>(found));
+            
+      
+            file << replaceWord;
+            
+          
+            file.seekg(pos);
+        }
+    }
+
+    file.close();
+    cout << "File has been modified successfully!" << endl;
+
+    return 0;
+}
